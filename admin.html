@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class='container'><br>
+        <nav class="navbar navbar-light bg-faded">
+            <div class='row'><a class="navbar-brand" href="#">Admin Panel</a>
+                <button type='button' class='btn btn-outline-danger' id='reset-button'>Reset Session</button>
+                <button type='button' class='btn btn-outline-primary' id='skip-next-button' style='margin-left:15px;'>Start / Skip</button>
+            </div>
+        </nav>
+        <div class='row' id='adminInfo'>
+        </div>
+    </div>
+</body>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        refreshAdminInfo();
+
+    });
+    $("#skip-next-button").on("click", function() {
+        console.log("Test");
+        $.ajax({
+            type: "POST",
+            url: "skip-next.php",
+            data: {},
+        });
+    });
+    $("#reset-button").on("click", function() {
+        console.log("Test");
+        $.ajax({
+            type: "POST",
+            url: "reset.php",
+            data: {},
+        });
+    });
+
+    function refreshAdminInfo() {
+        $('#adminInfo').load('getAdminInfo.php', function() {
+            setTimeout(refreshAdminInfo, 2000);
+        });
+    }
+</script>
+
+</html>
