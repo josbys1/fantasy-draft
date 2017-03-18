@@ -30,21 +30,21 @@ $conn->query("UPDATE teachers SET active=1 WHERE id=".$next_teacher_id);
 
 $list_of_arr=$conn->query("SELECT * FROM teachers WHERE id>=".$next_teacher_id);
 $k = $list_of_arr->fetch_assoc();
+while(isset($k)){
     $choice_array=unserialize($k['arr']);
     foreach ($choice_array as $j) {
+      echo("RUnning a foreach");
         $matched_query=$conn->query("SELECT * FROM students WHERE taken_by='' AND name LIKE '%".$j."%'");
         $matched_row=$matched_query->fetch_assoc();
-        //print($matched_row['id']);
-        //print(gettype($matched_row['id']));
-        if (isset($matched_row['id'])) {
-
-            $qu="UPDATE students SET taken_by='".$k['name']."' WHERE id=".$matched_row['id'];
-            print($qu);
+        if (isset($matched_row)) {
+            $qu="UPDATE students SET taken_by='".$k['name']."' WHERE id='".$matched_row['id']."'";
+            echo($qu);
             $conn->query($qu);
             break;
         }
+      }
+      print("Changing the value of k");
     $k=$list_of_arr->fetch_assoc();
-
 }
 $conn->close();
 
