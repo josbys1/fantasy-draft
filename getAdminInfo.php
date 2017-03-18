@@ -1,4 +1,3 @@
-
 <?php
 include('dbinfo.php');
 // Create connection

@@ -42,6 +42,7 @@
                      dataType: 'text',
                      success: function (data) {
                        console.log("Successfully called AJAX on button click.")
+                       console.log(data);
                        //refreshTable();
                      },
                      error: function(xhr, status, error){

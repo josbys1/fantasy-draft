@@ -23,12 +23,29 @@ $broad_teacher_select= "SELECT MIN(id) as MINID, MAX(id) as MAXID FROM teachers"
  $current_teacher_id=intval($result_teachers->fetch_assoc()['id']);
  $next_teacher_id=$current_teacher_id+1;
 $conn->query("UPDATE teachers SET active=0 WHERE id=".$current_teacher_id);
-if($next_teacher_id<=$max){
-  $conn->query("UPDATE teachers SET active=1 WHERE id=".$next_teacher_id);
-}else{
-    $conn->query("UPDATE teachers SET active=1 WHERE id=".$min);
-    //set back to min
-  }
- $conn->close();
+if ($current_teacher_id>=$max) {
+    $next_teacher_id=$min;
+}
+$conn->query("UPDATE teachers SET active=1 WHERE id=".$next_teacher_id);
+
+$list_of_arr=$conn->query("SELECT * FROM teachers WHERE id>=".$next_teacher_id);
+$k = $list_of_arr->fetch_assoc();
+    $choice_array=unserialize($k['arr']);
+    foreach ($choice_array as $j) {
+        $matched_query=$conn->query("SELECT * FROM students WHERE taken_by='' AND name LIKE '%".$j."%'");
+        $matched_row=$matched_query->fetch_assoc();
+        //print($matched_row['id']);
+        //print(gettype($matched_row['id']));
+        if (isset($matched_row['id'])) {
+
+            $qu="UPDATE students SET taken_by='".$k['name']."' WHERE id=".$matched_row['id'];
+            print($qu);
+            $conn->query($qu);
+            break;
+        }
+    $k=$list_of_arr->fetch_assoc();
+
+}
+$conn->close();
 
  ?>

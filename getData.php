@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
       print("It is not your turn currently. <b>".$n."</b> is currently making a choice.");
   }
 } else {
-  print("The student list is currently empty.")
+  print("The student list is currently empty.");
 }
 $conn->close();
 
