@@ -40,15 +40,20 @@ while ($k['arr']!='0'||$k['arr']!=0) {
     $choice_array=unserialize($k['arr']);
     foreach ($choice_array as $j) {
         $matched_query=$conn->query("SELECT * FROM students WHERE taken_by='' AND name LIKE '%".$j."%'");
-        //print($matched_query);
         $matched_row=$matched_query->fetch_assoc();
         if (isset($matched_row)) {
             $qu="UPDATE students SET taken_by='".$k['name']."' WHERE id='".$matched_row['id']."'";
             print($qu);
             $conn->query($qu);
+            $flag=1;
             break;
             echo("breaking");
         }
+    }
+    if($flag=1){
+      $get_id=$conn->query("SELECT * FROM students WHERE taken_by='' LIMIT 1")->fetch_assoc()['id'];
+      $conn->query("UPDATE students SET taken_by='".$k['name']."' WHERE id='".$get_id."'");
+      $flag=0;
     }
     getNextTeacher($current_teacher_id, $min, $max, $conn);
     print("TESTING");
