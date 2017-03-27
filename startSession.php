@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$insert_name="INSERT INTO teachers (id,name,active) VALUES (NULL,'".$login."',0)";
+$insert_name="INSERT INTO teachers (id,name,active,arr) VALUES (NULL,'".$login."',0,0)";
 $check_name = "SELECT id, name,active FROM teachers WHERE name = '".$login."'";
 $check_query=$conn->query($check_name);
 if($check_query->num_rows == 0&&isset($login)){
